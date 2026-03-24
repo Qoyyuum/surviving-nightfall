@@ -1,4 +1,5 @@
 from ursina import Text, Entity, color, destroy
+from ursina.prefabs.health_bar import HealthBar
 
 class HUD:
     def __init__(self, player, xp_system, wave_manager):
@@ -11,14 +12,18 @@ class HUD:
     def show(self):
         self.is_active = True
         
-        self.health_text = Text(
-            text="",
+        # Visual health bar
+        self.health_bar = HealthBar(
+            max_value=self.player.max_health,
+            value=self.player.health,
+            bar_color=color.red.tint(-.2),
             position=(-0.85, 0.45),
-            scale=1.5,
-            color=color.red,
-            origin=(-0.5, 0)
+            scale=(0.3, 0.03),
+            show_text=True,
+            show_lines=False,
+            roundness=0.5
         )
-        self.ui_elements.append(self.health_text)
+        self.ui_elements.append(self.health_bar)
         
         self.xp_text = Text(
             text="",
@@ -67,8 +72,8 @@ class HUD:
         if not self.is_active:
             return
             
-        if self.health_text:
-            self.health_text.text = f"HP: {int(self.player.health)}/{self.player.max_health}"
+        if self.health_bar:
+            self.health_bar.value = int(self.player.health)
             
         if self.xp_text:
             xp_progress = int(self.xp_system.get_xp_progress() * 100)
