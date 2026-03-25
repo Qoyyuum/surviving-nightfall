@@ -1,0 +1,113 @@
+name: Build and Release Game
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      
+    - name: Install dependencies
+      run: |
+        uv sync
+        
+    - name: Install PyInstaller
+      run: |
+        uv pip install pyinstaller
+        
+    - name: Build executable
+      run: |
+        uv run pyinstaller --name "SurvivingNightfall" --onefile --windowed --add-data "assets;assets" --add-data "game;game" --icon "assets/icon.ico" main.py
+        
+    - name: Create distribution package
+      run: |
+        mkdir dist/SurvivingNightfall-Windows
+        copy dist/SurvivingNightfall.exe dist/SurvivingNightfall-Windows/
+        xcopy /E /I assets dist/SurvivingNightfall-Windows/assets
+        echo "Surviving Nightfall - Wave-based Survival Game" > dist/SurvivingNightfall-Windows/README.txt
+        echo "" >> dist/SurvivingNightfall-Windows/README.txt
+        echo "Controls:" >> dist/SurvivingNightfall-Windows/README.txt
+        echo "- WASD: Move" >> dist/SurvivingNightfall-Windows/README.txt
+        echo "- Mouse: Look around" >> dist/SurvivingNightfall-Windows/README.txt
+        echo "- Left Click: Shoot" >> dist/SurvivingNightfall-Windows/README.txt
+        echo "- ESC: Pause" >> dist/SurvivingNightfall-Windows/README.txt
+        
+    - name: Zip distribution
+      run: |
+        powershell Compress-Archive -Path dist/SurvivingNightfall-Windows -DestinationPath SurvivingNightfall-Windows-${{ github.ref_name }}.zip
+        
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: SurvivingNightfall-Windows-${{ github.ref_name }}.zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build-linux:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      
+    - name: Install dependencies
+      run: |
+        uv sync
+        
+    - name: Install PyInstaller
+      run: |
+        uv pip install pyinstaller
+        
+    - name: Build executable
+      run: |
+        uv run pyinstaller --name "SurvivingNightfall" --onefile --windowed --add-data "assets:assets" --add-data "game:game" main.py
+        
+    - name: Create distribution package
+      run: |
+        mkdir -p dist/SurvivingNightfall-Linux
+        cp dist/SurvivingNightfall dist/SurvivingNightfall-Linux/
+        cp -r assets dist/SurvivingNightfall-Linux/
+        cat > dist/SurvivingNightfall-Linux/README.txt << EOF
+        Surviving Nightfall - Wave-based Survival Game
+        
+        Controls:
+        - WASD: Move
+        - Mouse: Look around
+        - Left Click: Shoot
+        - ESC: Pause
+        
+        To run: ./SurvivingNightfall
+        EOF
+        chmod +x dist/SurvivingNightfall-Linux/SurvivingNightfall
+        
+    - name: Create tarball
+      run: |
+        cd dist && tar -czf ../SurvivingNightfall-Linux-${{ github.ref_name }}.tar.gz SurvivingNightfall-Linux
+        
+    - name: Upload to Release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: SurvivingNightfall-Linux-${{ github.ref_name }}.tar.gz
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
