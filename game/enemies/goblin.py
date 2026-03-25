@@ -47,7 +47,7 @@ class Goblin(BaseEnemy):
         else:
             if self.jump_cooldown <= 0 and self.target and self.target.is_alive:
                 direction = (self.target.position - self.position).normalized()
-                self.jump_start_pos = self.position.copy()
+                self.jump_start_pos = Vec3(self.position)
                 self.jump_target_pos = self.position + direction * self.jump_distance
                 self.jump_target_pos.y = self.jump_start_pos.y
                 

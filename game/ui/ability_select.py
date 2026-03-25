@@ -1,4 +1,5 @@
 from ursina import Text, Button, color, destroy, Entity
+from ursina.prefabs.button_group import ButtonGroup
 import random
 
 class AbilitySelectUI:
@@ -24,7 +25,7 @@ class AbilitySelectUI:
             origin=(0, 0),
             scale=2,
             position=(0, 0.35),
-            color=color.yellow
+            color=color.rgb32(255, 255, 0)
         )
         self.ui_elements.append(title)
         
@@ -33,25 +34,37 @@ class AbilitySelectUI:
             origin=(0, 0),
             scale=1.5,
             position=(0, 0.25),
-            color=color.white
+            color=color.rgb32(255, 255, 255)
         )
         self.ui_elements.append(self.timer_text)
         
-        y_positions = [0.1, -0.05, -0.2]
+        # Build options list for ButtonGroup
+        options = []
+        self.ability_map = {}  # Map display names to abilities
         
-        for i, ability in enumerate(choices):
+        for ability in choices:
             ability_name = ability.name
             if hasattr(ability, 'level') and ability.level > 1:
-                ability_name += f" (Level {ability.level})"
-                
-            button = Button(
-                text=f"{ability_name}\n{ability.description}",
-                color=color.rgb(100, 50, 150),
-                scale=(0.5, 0.12),
-                position=(0, y_positions[i]),
-                on_click=lambda a=ability: self._on_ability_clicked(a)
-            )
-            self.ui_elements.append(button)
+                ability_name += f" (Lv{ability.level})"
+            
+            display_text = f"{ability_name}: {ability.description}"
+            options.append(display_text)
+            self.ability_map[display_text] = ability
+        
+        # Create ButtonGroup for ability selection
+        self.ability_group = ButtonGroup(
+            options=options,
+            min_selection=0,
+            max_selection=1,
+            origin=(0, 0),
+            spacing=(0, 0.025),
+            max_x=1
+        )
+        self.ability_group.position = (0, 0.05)
+        self.ability_group.on_value_changed = self._on_ability_group_changed
+        self.ability_group.selected_color = color.rgb32(100, 150, 255)
+        self.ability_group.highlight_selected_color = color.rgb32(120, 170, 255)
+        self.ui_elements.append(self.ability_group)
             
     def hide(self):
         self.is_active = False
@@ -74,6 +87,17 @@ class AbilitySelectUI:
                 self.on_timeout()
             self.hide()
             
+    def _on_ability_group_changed(self):
+        """Called when ButtonGroup selection changes"""
+        if hasattr(self, 'ability_group') and self.ability_group.selected:
+            selected_text = self.ability_group.selected[0].value
+            ability = self.ability_map.get(selected_text)
+            if ability:
+                self.selected_ability = ability
+                if self.on_ability_selected:
+                    self.on_ability_selected(ability)
+                self.hide()
+    
     def _on_ability_clicked(self, ability):
         self.selected_ability = ability
         if self.on_ability_selected:

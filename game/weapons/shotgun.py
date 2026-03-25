@@ -1,9 +1,16 @@
-from ursina import Vec3
+from ursina import Vec3, color
 from game.weapons.base_weapon import BaseWeapon, Projectile
 from game.config import GameConfig
 import math
 
 class Shotgun(BaseWeapon):
+    # Visual properties for first-person view
+    visual_model = "cube"
+    visual_color = color.brown
+    visual_scale = (0.15, 0.2, 0.5)
+    visual_position = (0.4, -0.3, 0.5)
+    visual_rotation = (-10, 0, 0)
+    
     def __init__(self, owner=None):
         super().__init__(
             name="Shotgun",

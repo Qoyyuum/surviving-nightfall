@@ -51,30 +51,25 @@ class Player(FirstPersonController):
         self.current_weapon = weapon
         weapon.owner = self
         
-        # Create visual weapon model
+        # Create visual weapon model using weapon's class properties
         if self.weapon_model:
             destroy(self.weapon_model)
         
-        # Different shapes and colors for different weapons
-        weapon_visuals = {
-            "Handgun": {"model": "cube", "color": color.gray, "scale": (0.1, 0.15, 0.3)},
-            "Shotgun": {"model": "cube", "color": color.brown, "scale": (0.15, 0.2, 0.5)},
-            "Machine Gun": {"model": "cube", "color": color.black, "scale": (0.12, 0.18, 0.4)},
-            "Katana": {"model": "cube", "color": color.cyan, "scale": (0.05, 0.05, 0.8)},
-            "Chainsaw": {"model": "cube", "color": color.orange, "scale": (0.2, 0.2, 0.4)},
-            "Bazooka": {"model": "cube", "color": color.olive, "scale": (0.2, 0.25, 0.6)},
-            "Flamethrower": {"model": "cube", "color": color.red, "scale": (0.15, 0.2, 0.5)}
-        }
-        
-        visual = weapon_visuals.get(weapon.name, {"model": "cube", "color": color.white, "scale": (0.1, 0.1, 0.3)})
+        # Get visual properties from weapon class (with defaults)
+        weapon_class = weapon.__class__
+        visual_model = getattr(weapon_class, 'visual_model', 'cube')
+        visual_color = getattr(weapon_class, 'visual_color', color.white)
+        visual_scale = getattr(weapon_class, 'visual_scale', (0.1, 0.1, 0.3))
+        visual_position = getattr(weapon_class, 'visual_position', (0.4, -0.3, 0.5))
+        visual_rotation = getattr(weapon_class, 'visual_rotation', (-10, 0, 0))
         
         self.weapon_model = Entity(
             parent=camera,
-            model=visual["model"],
-            color=visual["color"],
-            scale=visual["scale"],
-            position=(0.4, -0.3, 0.5),  # Right side, lower, in front
-            rotation=(-10, 0, 0)
+            model=visual_model,
+            color=visual_color,
+            scale=visual_scale,
+            position=visual_position,
+            rotation=visual_rotation
         )
         
     def add_ability(self, ability):

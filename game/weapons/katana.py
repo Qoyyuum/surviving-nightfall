@@ -1,11 +1,18 @@
-from ursina import Vec3, distance, time as ursina_time
+from ursina import Vec3, distance, time as ursina_time, color
 from game.weapons.base_weapon import BaseWeapon
 from game.config import GameConfig
 
 class Katana(BaseWeapon):
+    # Visual properties for first-person view
+    visual_model = "cube"
+    visual_color = color.cyan
+    visual_scale = (0.05, 0.05, 0.8)
+    visual_position = (0.4, -0.3, 0.5)
+    visual_rotation = (-10, 0, 0)
+    
     def __init__(self, owner=None):
         super().__init__(
-            name="Dual Katana",
+            name="Katana",
             damage=GameConfig.WEAPON_KATANA_DAMAGE,
             fire_rate=GameConfig.WEAPON_KATANA_FIRE_RATE,
             owner=owner

@@ -1,4 +1,5 @@
 from ursina import distance, destroy, Vec3
+from game.effects.hit_particles import create_simple_hit_effect
 
 class CollisionSystem:
     def __init__(self):
@@ -27,6 +28,9 @@ class CollisionSystem:
                     enemy_xp = enemy.xp_value
                     enemy_score = enemy.score_value
                     enemy_pos = Vec3(enemy.position)
+                    
+                    # Create hit particle effect
+                    create_simple_hit_effect(projectile.position)
                     
                     enemy_died = enemy.take_damage(projectile.damage)
                     destroy(projectile)

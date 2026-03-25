@@ -1,4 +1,5 @@
-from ursina import Text, Button, color, destroy, Entity, camera, Vec3
+from ursina import Text, Button, color, destroy, Entity, camera, Vec3, Func
+from ursina.prefabs.button_list import ButtonList
 from game.config import GameConfig
 
 class WeaponShopUI:
@@ -19,7 +20,7 @@ class WeaponShopUI:
             origin=(0, 0),
             scale=2.5,
             position=(0, 0.4),
-            color=color.yellow
+            color=color.rgb32(255, 255, 0)
         )
         self.ui_elements.append(title)
         
@@ -28,48 +29,44 @@ class WeaponShopUI:
             origin=(1, 1),  # Top right origin
             scale=1.5,
             position=(0.85, 0.48),  # Top right corner
-            color=color.cyan
+            color=color.rgb32(0, 255, 255)
         )
         self.ui_elements.append(self.score_text)
         
-        y_start = 0.22
-        y_spacing = 0.075
-        
-        print(f"Creating weapon shop with {len(GameConfig.WEAPONS)} weapons")
-        
-        for i, (weapon_name, weapon_data) in enumerate(GameConfig.WEAPONS.items()):
-            y_pos = y_start - (i * y_spacing)
-            
+        # Build button dictionary for ButtonList
+        button_dict = {}
+        for weapon_name, weapon_data in GameConfig.WEAPONS.items():
             cost = weapon_data["cost"]
             is_unlocked = self.score_system.is_unlocked(weapon_name)
             can_afford = self.score_system.can_afford(weapon_name)
             
             if is_unlocked:
-                status = "[UNLOCKED]"
-                btn_color = color.green
+                status = "✓ UNLOCKED"
             elif can_afford:
-                status = f"Cost: {cost}"
-                btn_color = color.blue
+                status = f"${cost} - Click to Buy"
             else:
-                status = f"Cost: {cost} [LOCKED]"
-                btn_color = color.red
-                
-            button_text = f"{weapon_name.replace('_', ' ').title()}: {weapon_data['description']} - {weapon_data['cost']} {status}"
+                status = f"${cost} - LOCKED"
             
-            # print(f"  Creating button {i}: {weapon_name} at y={y_pos}, unlocked={is_unlocked}, affordable={can_afford}")
+            display_name = f"{weapon_name.replace('_', ' ').title()}: {weapon_data['description']} - {status}"
             
-            button = Button(
-                text=button_text,
-                color=btn_color,
-                scale=(0.6, 0.05),
-                position=(0, y_pos),
-                origin=(0, 0),
-                on_click=lambda w=weapon_name: self._on_weapon_clicked(w),
-                enabled=True,
-                text_size=0.75
-            )
-            self.ui_elements.append(button)
-            print(f"    Button created at ({0}, {y_pos}), scale=(0.6, 0.05)")
+            # Only enable if can afford and not unlocked
+            if can_afford and not is_unlocked:
+                button_dict[display_name] = Func(self._on_weapon_clicked, weapon_name)
+            else:
+                button_dict[display_name] = None
+        
+        # Create ButtonList
+        self.weapon_list = ButtonList(
+            button_dict,
+            button_height=1.2,
+            width=0.7,
+            popup=False,
+            color=color.rgb32(40, 40, 60),
+            highlight_color=color.rgb32(80, 80, 120),
+            selected_color=color.rgb32(100, 150, 255)
+        )
+        self.weapon_list.position = (0, 0.15)
+        self.ui_elements.append(self.weapon_list)
             
         back_button = Button(
             text="Back to Menu",

@@ -12,7 +12,7 @@ class FlameProjectile(Projectile):
             damage=damage,
             lifetime=lifetime,
             size=size,
-            color=color.rgb(255, 100, 0),
+            color=color.rgb32(255, 100, 0),
             owner=owner
         )
         
@@ -21,6 +21,13 @@ class FlameProjectile(Projectile):
 
 
 class Flamethrower(BaseWeapon):
+    # Visual properties for first-person view
+    visual_model = "cube"
+    visual_color = color.red
+    visual_scale = (0.15, 0.2, 0.5)
+    visual_position = (0.4, -0.3, 0.5)
+    visual_rotation = (-10, 0, 0)
+    
     def __init__(self, owner=None):
         super().__init__(
             name="Flamethrower",

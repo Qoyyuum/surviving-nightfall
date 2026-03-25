@@ -1,4 +1,5 @@
 from ursina import destroy, application, mouse, camera, Vec3, Entity
+from ursina.prefabs.pause_menu import PauseMenu
 from game.player import Player
 from game.weapons.handgun import Handgun
 from game.weapons.shotgun import Shotgun
@@ -44,9 +45,11 @@ class GameManager(Entity):
         self.ability_select_ui = AbilitySelectUI()
         self.weapon_shop_ui = WeaponShopUI(self.score_system)
         self.game_over_ui = GameOverUI()
+        self.pause_menu = PauseMenu()
         
         self.pending_ability_selections = []
         self.available_abilities = []
+        self.next_wave_to_start = None
         
         self._setup_callbacks()
         self.show_main_menu()
@@ -126,11 +129,14 @@ class GameManager(Entity):
         return weapon_class(owner=self.player)
         
     def on_wave_complete(self, wave_number):
+        # Store the next wave to start after ability selection
+        self.next_wave_to_start = wave_number + 1
+        
         if len(self.pending_ability_selections) > 0:
             self.show_ability_select()
         else:
             self.score_system.add_score(100)
-            self.wave_manager.start_wave(wave_number + 1)
+            self.wave_manager.start_wave(self.next_wave_to_start)
             
     def on_all_waves_complete(self):
         self.end_game(victory=True)
@@ -170,9 +176,11 @@ class GameManager(Entity):
         self.state = GameState.PLAYING
         mouse.locked = True
         
-        if self.wave_manager.current_wave < 5:
+        # Start the next wave that was queued after wave completion
+        if hasattr(self, 'next_wave_to_start') and self.next_wave_to_start is not None and self.next_wave_to_start <= 5:
             self.score_system.add_score(100)
-            self.wave_manager.start_wave(self.wave_manager.current_wave + 1)
+            self.wave_manager.start_wave(self.next_wave_to_start)
+            self.next_wave_to_start = None  # Clear it
             
     def end_game(self, victory=False):
         self.state = GameState.GAME_OVER

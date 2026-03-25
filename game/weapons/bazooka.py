@@ -27,6 +27,13 @@ class ExplosiveProjectile(Projectile):
 
 
 class Bazooka(BaseWeapon):
+    # Visual properties for first-person view
+    visual_model = "cube"
+    visual_color = color.olive
+    visual_scale = (0.2, 0.25, 0.6)
+    visual_position = (0.4, -0.3, 0.5)
+    visual_rotation = (-10, 0, 0)
+    
     def __init__(self, owner=None):
         super().__init__(
             name="Bazooka",

@@ -12,7 +12,7 @@ def main():
         vsync=True
     )
     
-    window.color = color.rgb(10, 10, 20)
+    window.color = color.rgb32(10, 10, 20)
     
     # Create flat terrain (all height values = 0 for flat ground)
     terrain_size = 64  # Resolution of terrain grid
