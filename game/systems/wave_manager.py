@@ -2,11 +2,11 @@ from ursina import time, Vec3, scene, color, window
 import random
 import math
 from game.config import GameConfig
-from game.enemies.zombie import Zombie
+from game.enemies.green_demon import GreenDemon
 from game.enemies.ghost import Ghost
-from game.enemies.vampire import Vampire
-from game.enemies.goblin import Goblin
-from game.enemies.minotaur import Minotaur
+from game.enemies.cyclops import Cyclops
+from game.enemies.bat import Bat
+from game.enemies.cthulhu import Cthulhu
 
 
 class WaveManager:
@@ -72,16 +72,16 @@ class WaveManager:
         spawn_pos = Vec3(spawn_x, 1, spawn_z)
 
         enemy = None
-        if enemy_type == "zombie":
-            enemy = Zombie(spawn_pos, self.player)
+        if enemy_type == "green_demon":
+            enemy = GreenDemon(spawn_pos, self.player)
         elif enemy_type == "ghost":
             enemy = Ghost(spawn_pos, self.player)
-        elif enemy_type == "vampire":
-            enemy = Vampire(spawn_pos, self.player)
-        elif enemy_type == "goblin":
-            enemy = Goblin(spawn_pos, self.player)
-        elif enemy_type == "minotaur":
-            enemy = Minotaur(spawn_pos, self.player)
+        elif enemy_type == "cyclops":
+            enemy = Cyclops(spawn_pos, self.player)
+        elif enemy_type == "bat":
+            enemy = Bat(spawn_pos, self.player)
+        elif enemy_type == "cthulhu":
+            enemy = Cthulhu(spawn_pos, self.player)
 
         if enemy:
             enemy.all_enemies = self.enemies

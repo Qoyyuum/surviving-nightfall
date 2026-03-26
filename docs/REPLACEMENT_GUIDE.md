@@ -54,11 +54,11 @@ surviving_nightfall/
 │   │   ├── player/
 │   │   │   └── player_character.obj
 │   │   ├── enemies/
-│   │   │   ├── zombie.obj
+│   │   │   ├── green_demon.obj
 │   │   │   ├── ghost.obj
-│   │   │   ├── vampire.obj
-│   │   │   ├── goblin.obj
-│   │   │   └── minotaur.obj
+│   │   │   ├── cyclops.obj
+│   │   │   ├── bat.obj
+│   │   │   └── cthulhu.obj
 │   │   ├── weapons/
 │   │   │   └── (weapon models if needed)
 │   │   └── collectibles/
@@ -66,7 +66,7 @@ surviving_nightfall/
 │   │       └── food_orb.obj
 │   ├── textures/
 │   │   ├── player_texture.png
-│   │   ├── zombie_texture.png
+│   │   ├── green_demon_texture.png
 │   │   └── (other textures)
 │   └── replacement_guide.md (this file)
 ```
@@ -108,9 +108,9 @@ super().__init__(
 
 ## Replacing Enemy Models
 
-### Zombie
+### Green Demon
 
-**File**: `game/enemies/zombie.py`
+**File**: `game/enemies/green_demon.py`
 
 **Current**:
 ```python
@@ -123,8 +123,8 @@ super().__init__(
 **Replacement**:
 ```python
 super().__init__(
-    model='assets/models/enemies/zombie.obj',
-    texture='assets/textures/zombie_texture.png',
+    model='assets/models/enemies/green_demon.obj',
+    texture='assets/textures/green_demon_texture.png',
     # ...
 )
 ```
@@ -153,23 +153,23 @@ super().__init__(
 
 **Note**: For ghosts, you may want to use a semi-transparent texture or material.
 
-### Vampire
+### Cyclops
 
-**File**: `game/enemies/vampire.py`
+**File**: `game/enemies/cyclops.py`
 
-**Replacement**: Same pattern as Zombie
+**Replacement**: Same pattern as Green Demon
 
-### Goblin
+### Bat
 
-**File**: `game/enemies/goblin.py`
+**File**: `game/enemies/bat.py`
 
-**Note**: Goblins are smaller enemies. Make sure your model is appropriately scaled (about 0.5-0.8 units tall).
+**Note**: Bats are smaller enemies. Make sure your model is appropriately scaled (about 0.5-0.8 units tall).
 
-### Minotaur
+### Cthulhu
 
-**File**: `game/enemies/minotaur.py`
+**File**: `game/enemies/cthulhu.py`
 
-**Note**: Minotaurs are large boss enemies. Scale should be 2-3x larger than normal enemies.
+**Note**: Cthulhu is a large boss enemy. Scale should be 2-3x larger than normal enemies.
 
 ---
 
@@ -353,11 +353,11 @@ Common animation names in your 3D software:
 | Object Type | File Location | Current Model | Recommended Size |
 |-------------|---------------|---------------|------------------|
 | Player | `game/player.py` | `'cube'` | 1.5-2.0 units tall |
-| Zombie | `game/enemies/zombie.py` | `'cube'` | 1.5 units tall |
+| Green Demon | `game/enemies/green_demon.py` | `'cube'` | 1.5 units tall |
 | Ghost | `game/enemies/ghost.py` | `'sphere'` | 0.7 units radius |
-| Vampire | `game/enemies/vampire.py` | `'cube'` | 1.6 units tall |
-| Goblin | `game/enemies/goblin.py` | `'cube'` | 0.8 units tall |
-| Minotaur | `game/enemies/minotaur.py` | `'cube'` | 3.0 units tall |
+| Cyclops | `game/enemies/cyclops.py` | `'cube'` | 1.6 units tall |
+| Bat | `game/enemies/bat.py` | `'cube'` | 0.8 units tall |
+| Cthulhu | `game/enemies/cthulhu.py` | `'cube'` | 3.0 units tall |
 | Bullet | `game/weapons/base_weapon.py` | `'sphere'` | 0.15 units |
 | XP Orb | `game/systems/xp_system.py` | `'sphere'` | 0.3 units |
 | Food Orb | `game/abilities/healing.py` | `'sphere'` | 0.25 units |

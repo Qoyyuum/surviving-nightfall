@@ -26,11 +26,11 @@ Welcome to the documentation for **Surviving Nightfall**, a 3D third-person bull
 
 ### Enemy Types
 
-1. **Zombie** - Basic melee attacker
+1. **Green Demon** - Basic melee attacker
 2. **Ghost** - Can dodge bullets (30% chance)
-3. **Vampire** - Speed burst ability
-4. **Goblin** - Jump attacks
-5. **Minotaur** - High HP boss (Wave 5 only)
+3. **Cyclops** - Speed burst ability
+4. **Bat** - Jump attacks
+5. **Cthulhu** - High HP boss (Wave 5 only)
 
 ### Weapons
 

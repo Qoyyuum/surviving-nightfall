@@ -1,6 +1,6 @@
 # Surviving Nightfall
 
-A 3D third-person bullet hell survival game built with Python and Ursina Game Engine.
+A 3D third-person bullet hell survival game built with Python and Ursina Game Engine. This is a game entry for PyWeek 41, a Game Jam competition. https://pyweek.org/e/surviving-nightfall/
 
 ## Quick Start
 
@@ -33,7 +33,16 @@ Full documentation is available in the [`docs/`](docs/) folder:
 
 ## Game Overview
 
-Survive waves of supernatural enemies in an endless night. Fight through 5 increasingly difficult waves using various weapons and special abilities. Unlock new weapons with accumulated score across sessions.
+You are thrown into a world of neverending darkness called "Surviving Nightfall." Cyclops, Green Demons, Ghosts, Bats, Cthulhu, and various enemies with different abilities are out to kill every human on earth. Survive the longest night by shooting, leveling up, and unlocking powerful weapons.
+
+## Enemies
+
+### Enemies (5 Types)
+- **Green Demon** - Basic melee enemy
+- **Ghost** - Can occasionally dodge bullets (30% chance)
+- **Cyclops** - Alternates between walking and speed bursts
+- **Bat** - Small, jumps toward the player
+- **Cthulhu** - High HP boss enemy (Wave 5 only)
 
 ## Requirements
 

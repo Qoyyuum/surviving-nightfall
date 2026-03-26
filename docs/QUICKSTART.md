@@ -34,11 +34,11 @@ This will install Ursina and all required dependencies.
    - Click "Exit Game" to quit
 
 2. **Survive 5 Waves**
-   - Wave 1: Zombies only
-   - Wave 2: Zombies + Ghosts
-   - Wave 3: Zombies + Ghosts + Vampires
-   - Wave 4: All above + Goblins
-   - Wave 5: All enemies + Minotaur boss
+   - Wave 1: Green Demons only
+   - Wave 2: Green Demons + Ghosts
+   - Wave 3: Green Demons + Ghosts + Cyclops
+   - Wave 4: All above + Bats
+   - Wave 5: All enemies + Cthulhu boss
 
 3. **Level Up Between Waves**
    - Collect cyan XP orbs from defeated enemies

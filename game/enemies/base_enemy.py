@@ -9,15 +9,18 @@ class BaseEnemy(Entity):
         health,
         speed,
         damage,
-        size,
-        color,
         xp_value,
         score_value,
+        size=1,
+        color=None,
         **kwargs,
     ):
-        super().__init__(
-            position=position, scale=size, color=color, collider="box", **kwargs
-        )
+        # Only pass color if it's not None (for textured models)
+        entity_kwargs = {"position": position, "scale": size, "collider": "box", **kwargs}
+        if color is not None:
+            entity_kwargs["color"] = color
+        
+        super().__init__(**entity_kwargs)
 
         self.target = target
         self.max_health = health

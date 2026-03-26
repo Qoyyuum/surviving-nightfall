@@ -3,24 +3,23 @@ from game.config import GameConfig
 from ursina import time
 
 
-class Vampire(BaseEnemy):
+class Cyclops(BaseEnemy):
     def __init__(self, position, target):
         super().__init__(
-            model="cube",
+            model="assets/models/monsters/Cyclops.obj",
             position=position,
             target=target,
-            health=GameConfig.ENEMY_VAMPIRE_HP,
-            speed=GameConfig.ENEMY_VAMPIRE_SPEED,
-            damage=GameConfig.ENEMY_VAMPIRE_DAMAGE,
-            size=GameConfig.ENEMY_VAMPIRE_SIZE,
-            color=GameConfig.ENEMY_VAMPIRE_COLOR,
-            xp_value=GameConfig.XP_PER_VAMPIRE,
-            score_value=GameConfig.SCORE_PER_KILL_VAMPIRE,
+            health=GameConfig.ENEMY_CYCLOPS_HP,
+            speed=GameConfig.ENEMY_CYCLOPS_SPEED,
+            damage=GameConfig.ENEMY_CYCLOPS_DAMAGE,
+            size=GameConfig.ENEMY_CYCLOPS_SIZE,
+            xp_value=GameConfig.XP_PER_CYCLOPS,
+            score_value=GameConfig.SCORE_PER_KILL_CYCLOPS,
         )
 
-        self.burst_speed = GameConfig.ENEMY_VAMPIRE_SPEED_BURST
-        self.burst_duration = GameConfig.ENEMY_VAMPIRE_BURST_DURATION
-        self.burst_cooldown_time = GameConfig.ENEMY_VAMPIRE_BURST_COOLDOWN
+        self.burst_speed = GameConfig.ENEMY_CYCLOPS_SPEED_BURST
+        self.burst_duration = GameConfig.ENEMY_CYCLOPS_BURST_DURATION
+        self.burst_cooldown_time = GameConfig.ENEMY_CYCLOPS_BURST_COOLDOWN
 
         self.is_bursting = False
         self.burst_timer = 0

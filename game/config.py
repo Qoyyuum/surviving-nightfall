@@ -17,41 +17,41 @@ class GameConfig:
     GROUND_SIZE = 100
     GROUND_COLOR = color.rgb32(30, 30, 40)
 
-    ENEMY_ZOMBIE_HP = 50
-    ENEMY_ZOMBIE_SPEED = 2
-    ENEMY_ZOMBIE_DAMAGE = 10
-    ENEMY_ZOMBIE_SIZE = Vec3(0.8, 1.5, 0.8)
-    ENEMY_ZOMBIE_COLOR = color.rgb32(50, 150, 50)
+    ENEMY_GREEN_DEMON_HP = 50
+    ENEMY_GREEN_DEMON_SPEED = 2
+    ENEMY_GREEN_DEMON_DAMAGE = 10
+    ENEMY_GREEN_DEMON_SIZE = Vec3(0.6, 0.6, 0.6)
+    ENEMY_GREEN_DEMON_COLOR = color.rgb32(50, 150, 50)
 
     ENEMY_GHOST_HP = 30
     ENEMY_GHOST_SPEED = 2.5
     ENEMY_GHOST_DAMAGE = 8
-    ENEMY_GHOST_SIZE = 0.7
+    ENEMY_GHOST_SIZE = Vec3(0.6, 0.6, 0.6)
     ENEMY_GHOST_COLOR = color.rgba(200, 200, 200, 150)
     ENEMY_GHOST_DODGE_CHANCE = 0.3
 
-    ENEMY_VAMPIRE_HP = 60
-    ENEMY_VAMPIRE_SPEED = 2.2
-    ENEMY_VAMPIRE_SPEED_BURST = 5.5
-    ENEMY_VAMPIRE_DAMAGE = 12
-    ENEMY_VAMPIRE_SIZE = Vec3(0.7, 1.6, 0.7)
-    ENEMY_VAMPIRE_COLOR = color.rgb32(150, 20, 20)
-    ENEMY_VAMPIRE_BURST_DURATION = 1.5
-    ENEMY_VAMPIRE_BURST_COOLDOWN = 5.0
+    ENEMY_CYCLOPS_HP = 60
+    ENEMY_CYCLOPS_SPEED = 2.2
+    ENEMY_CYCLOPS_SPEED_BURST = 5.5
+    ENEMY_CYCLOPS_DAMAGE = 12
+    ENEMY_CYCLOPS_SIZE = Vec3(0.7, 1.6, 0.7)
+    ENEMY_CYCLOPS_COLOR = color.rgb32(150, 20, 20)
+    ENEMY_CYCLOPS_BURST_DURATION = 1.5
+    ENEMY_CYCLOPS_BURST_COOLDOWN = 5.0
 
-    ENEMY_GOBLIN_HP = 25
-    ENEMY_GOBLIN_SPEED = 1.8
-    ENEMY_GOBLIN_DAMAGE = 6
-    ENEMY_GOBLIN_SIZE = Vec3(0.5, 0.8, 0.5)
-    ENEMY_GOBLIN_COLOR = color.rgb32(100, 70, 40)
-    ENEMY_GOBLIN_JUMP_COOLDOWN = 4.0
-    ENEMY_GOBLIN_JUMP_DISTANCE = 5.0
+    ENEMY_BAT_HP = 25
+    ENEMY_BAT_SPEED = 1.8
+    ENEMY_BAT_DAMAGE = 6
+    ENEMY_BAT_SIZE = Vec3(0.5, 0.8, 0.5)
+    ENEMY_BAT_COLOR = color.rgb32(100, 70, 40)
+    ENEMY_BAT_JUMP_COOLDOWN = 4.0
+    ENEMY_BAT_JUMP_DISTANCE = 5.0
 
-    ENEMY_MINOTAUR_HP = 500
-    ENEMY_MINOTAUR_SPEED = 1.5
-    ENEMY_MINOTAUR_DAMAGE = 25
-    ENEMY_MINOTAUR_SIZE = Vec3(2.0, 3.0, 2.0)
-    ENEMY_MINOTAUR_COLOR = color.rgb32(60, 60, 60)
+    ENEMY_CTHULHU_HP = 500
+    ENEMY_CTHULHU_SPEED = 1.5
+    ENEMY_CTHULHU_DAMAGE = 25
+    ENEMY_CTHULHU_SIZE = Vec3(2.0, 3.0, 2.0)
+    ENEMY_CTHULHU_COLOR = color.rgb32(60, 60, 60)
 
     # Centralized weapon data: cost, description, and stats
     WEAPONS = {
@@ -147,27 +147,27 @@ class GameConfig:
 
     PROJECTILE_LIFETIME = 3.0
 
-    WAVE_1_ENEMIES = {"zombie": 10}
-    WAVE_2_ENEMIES = {"zombie": 10, "ghost": 5}
-    WAVE_3_ENEMIES = {"zombie": 10, "ghost": 5, "vampire": 5}
-    WAVE_4_ENEMIES = {"zombie": 10, "ghost": 5, "vampire": 5, "goblin": 5}
+    WAVE_1_ENEMIES = {"green_demon": 10}
+    WAVE_2_ENEMIES = {"green_demon": 10, "ghost": 5}
+    WAVE_3_ENEMIES = {"green_demon": 10, "ghost": 5, "cyclops": 5}
+    WAVE_4_ENEMIES = {"green_demon": 10, "ghost": 5, "cyclops": 5, "bat": 5}
     WAVE_5_ENEMIES = {
-        "zombie": 10,
+        "green_demon": 10,
         "ghost": 8,
-        "vampire": 7,
-        "goblin": 5,
-        "minotaur": 1,
+        "cyclops": 7,
+        "bat": 5,
+        "cthulhu": 1,
     }
 
     SPAWN_RADIUS_MIN = 20
     SPAWN_RADIUS_MAX = 25
     SPAWN_STAGGER_TIME = 0.5
 
-    XP_PER_ZOMBIE = 10
+    XP_PER_GREEN_DEMON = 10
     XP_PER_GHOST = 15
-    XP_PER_VAMPIRE = 20
-    XP_PER_GOBLIN = 12
-    XP_PER_MINOTAUR = 100
+    XP_PER_CYCLOPS = 20
+    XP_PER_BAT = 12
+    XP_PER_CTHULHU = 100
 
     XP_LEVEL_BASE = 100
     XP_LEVEL_MULTIPLIER = 1.5
@@ -192,11 +192,11 @@ class GameConfig:
     FOOD_ORB_SIZE = 0.25
     FOOD_ORB_COLOR = color.pink
 
-    SCORE_PER_KILL_ZOMBIE = 10
+    SCORE_PER_KILL_GREEN_DEMON = 10
     SCORE_PER_KILL_GHOST = 15
-    SCORE_PER_KILL_VAMPIRE = 20
-    SCORE_PER_KILL_GOBLIN = 12
-    SCORE_PER_KILL_MINOTAUR = 100
+    SCORE_PER_KILL_CYCLOPS = 20
+    SCORE_PER_KILL_BAT = 12
+    SCORE_PER_KILL_CTHULHU = 100
     SCORE_PER_WAVE = 100
 
     COLLISION_CHECK_INTERVAL = 0.016

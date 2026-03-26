@@ -6,7 +6,7 @@ import random
 class Ghost(BaseEnemy):
     def __init__(self, position, target):
         super().__init__(
-            model="sphere",
+            model="assets/models/monsters/Ghost.obj",
             position=position,
             target=target,
             health=GameConfig.ENEMY_GHOST_HP,

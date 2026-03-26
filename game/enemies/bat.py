@@ -4,23 +4,22 @@ from ursina import time, Vec3
 import random
 
 
-class Goblin(BaseEnemy):
+class Bat(BaseEnemy):
     def __init__(self, position, target):
         super().__init__(
-            model="cube",
+            model="assets/models/monsters/Bat.obj",
             position=position,
             target=target,
-            health=GameConfig.ENEMY_GOBLIN_HP,
-            speed=GameConfig.ENEMY_GOBLIN_SPEED,
-            damage=GameConfig.ENEMY_GOBLIN_DAMAGE,
-            size=GameConfig.ENEMY_GOBLIN_SIZE,
-            color=GameConfig.ENEMY_GOBLIN_COLOR,
-            xp_value=GameConfig.XP_PER_GOBLIN,
-            score_value=GameConfig.SCORE_PER_KILL_GOBLIN,
+            health=GameConfig.ENEMY_BAT_HP,
+            speed=GameConfig.ENEMY_BAT_SPEED,
+            damage=GameConfig.ENEMY_BAT_DAMAGE,
+            size=GameConfig.ENEMY_BAT_SIZE,
+            xp_value=GameConfig.XP_PER_BAT,
+            score_value=GameConfig.SCORE_PER_KILL_BAT,
         )
 
-        self.jump_cooldown_time = GameConfig.ENEMY_GOBLIN_JUMP_COOLDOWN
-        self.jump_distance = GameConfig.ENEMY_GOBLIN_JUMP_DISTANCE
+        self.jump_cooldown_time = GameConfig.ENEMY_BAT_JUMP_COOLDOWN
+        self.jump_distance = GameConfig.ENEMY_BAT_JUMP_DISTANCE
         self.jump_cooldown = random.uniform(2, 4)
 
         self.is_jumping = False
