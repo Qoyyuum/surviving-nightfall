@@ -1,4 +1,4 @@
-from ursina import Text, color, destroy
+from ursina import Text, color, destroy, time
 from ursina.prefabs.button_group import ButtonGroup
 import random
 
@@ -78,7 +78,7 @@ class AbilitySelectUI:
         if not self.is_active:
             return
 
-        self.timer -= 1 / 60.0
+        self.timer -= time.dt
 
         if self.timer_text:
             self.timer_text.text = f"Time: {int(self.timer)}s"
