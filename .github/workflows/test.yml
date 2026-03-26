@@ -1,0 +1,57 @@
+name: Test Build
+
+# This workflow tests the build process without creating a release
+# Useful for testing before you create an actual release
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:  # Allows manual trigger from Actions tab
+
+jobs:
+  test-build:
+    runs-on: windows-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+        
+    - name: Install uv
+      uses: astral-sh/setup-uv@v4
+      
+    - name: Install dependencies
+      run: |
+        uv sync
+        
+    - name: Run syntax check
+      run: |
+        uv run python -m py_compile main.py
+        uv run python -m py_compile game/**/*.py
+        
+    - name: Test game imports
+      run: |
+        uv run python -c "from game.game_manager import GameManager; print('✓ Game imports successful')"
+        
+    - name: Install PyInstaller
+      run: |
+        uv pip install pyinstaller
+        
+    - name: Test PyInstaller build
+      run: |
+        uv run pyinstaller --name "SurvivingNightfall-Test" --onefile --windowed --add-data "assets;assets" --add-data "game;game" main.py
+        
+    - name: Verify executable exists
+      run: |
+        if (Test-Path "dist/SurvivingNightfall-Test.exe") {
+          Write-Host "✓ Executable built successfully"
+        } else {
+          Write-Host "✗ Executable not found"
+          exit 1
+        }

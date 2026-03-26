@@ -30,7 +30,7 @@ def main():
     # Dark blue night sky
     # sky = Sky(color=color.rgb32(15, 20, 40))
     # sky.texture = 'sky_sunset'  # Use built-in gradient texture for better appearance
-    sky = Sky(texture="sky_sunset")
+    sky = Sky(texture="sky_night")
     sky.ground = ground
     
     game_manager = GameManager()
