@@ -24,13 +24,9 @@ jobs:
       run: |
         uv sync
         
-    - name: Install PyInstaller
-      run: |
-        uv pip install pyinstaller
-        
     - name: Build executable
       run: |
-        uv run pyinstaller --name "SurvivingNightfall" --onefile --windowed --add-data "assets;assets" --add-data "game;game" --icon "assets/icon.ico" main.py
+        uvx pyinstaller --name "SurvivingNightfall" --onefile --windowed --add-data "assets;assets" --add-data "game;game" --icon "assets/icon.ico" main.py
         
     - name: Create distribution package
       run: |
