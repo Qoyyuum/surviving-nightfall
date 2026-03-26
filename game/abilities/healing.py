@@ -32,7 +32,12 @@ class FoodOrb(Entity):
 
 class Healing(BaseAbility):
     def __init__(self):
-        super().__init__(name="Healing", description="Enemies drop food that heals you")
+        super().__init__(
+            name="Healing",
+            description="Enemies drop food that heals you",
+            ui_model='sphere',
+            ui_color=(100, 255, 100)  # Green
+        )
 
         self.heal_amount = GameConfig.ABILITY_HEALING_AMOUNT
         self.drop_chance = GameConfig.ABILITY_HEALING_DROP_CHANCE
