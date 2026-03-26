@@ -1,4 +1,4 @@
-from ursina import destroy, application, mouse, camera, Vec3, Entity
+from ursina import destroy, application, mouse, camera, Vec3, Entity, color, scene, window
 from ursina.prefabs.pause_menu import PauseMenu
 from game.player import Player
 from game.weapons.handgun import Handgun
@@ -76,6 +76,11 @@ class GameManager(Entity):
         self.main_menu.hide()
         self.state = GameState.WEAPON_SHOP
         self.weapon_shop_ui.show()
+    
+    def set_fog(self):
+        scene.fog_color = color.black
+        scene.fog_density = (0, 15)
+        window.color = scene.fog_color
         
     def start_game(self):
         self.main_menu.hide()
@@ -83,6 +88,8 @@ class GameManager(Entity):
         
         self.state = GameState.PLAYING
         mouse.locked = True
+
+        # self.set_fog()
         
         self.player = Player()
         self.player.game_manager = self

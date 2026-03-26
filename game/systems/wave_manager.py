@@ -1,4 +1,4 @@
-from ursina import time, Vec3
+from ursina import time, Vec3, scene, color, window
 import random
 import math
 from game.config import GameConfig
@@ -28,6 +28,11 @@ class WaveManager:
         
         self.on_wave_complete = None
         self.on_all_waves_complete = None
+    
+    def set_fog(self):
+        scene.fog_color = color.black
+        scene.fog_density = (0, 15)
+        window.color = scene.fog_color
         
     def start_wave(self, wave_number):
         if wave_number < 1 or wave_number > self.max_waves:
@@ -83,6 +88,7 @@ class WaveManager:
         return len(self.spawn_queue) == 0 and len(self.enemies) == 0
         
     def update(self):
+        self.set_fog()
         if not self.wave_active:
             return
         
