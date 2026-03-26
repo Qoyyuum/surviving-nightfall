@@ -75,11 +75,19 @@ class BaseEnemy(Entity):
         
         target_dir = self.target.position - self.position
         target_dir.y = 0
-        direction = target_dir.normalized()
         
+        if target_dir.length() < 0.01:
+            return
+        
+        direction = target_dir.normalized()
         separation = self.separate_from_enemies()
         
-        final_direction = (direction + separation).normalized()
+        combined = direction + separation
+        
+        if combined.length() < 0.01:
+            final_direction = direction
+        else:
+            final_direction = combined.normalized()
         
         movement = final_direction * self.speed * speed_multiplier * time.dt
         movement.y = 0
