@@ -31,7 +31,7 @@ def main():
     # Dark blue night sky
     sky = Sky(color=color.rgb32(15, 20, 40))
     sky.texture = 'sky_sunset'  # Use built-in gradient texture for better appearance
-    # sky.ground = ground
+    sky.ground = ground
     
     # Add animated moon
     moon = Moon()
