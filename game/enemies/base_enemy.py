@@ -123,6 +123,10 @@ class BaseEnemy(Entity):
         if not self.is_alive:
             return
 
+        # Check if game is paused
+        if hasattr(self.target, 'game_manager') and self.target.game_manager.pause_menu.is_active:
+            return
+
         if self.attack_cooldown > 0:
             self.attack_cooldown -= time.dt
 

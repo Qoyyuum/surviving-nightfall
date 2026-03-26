@@ -1,5 +1,5 @@
 from ursina import destroy, application, mouse, Entity, color, scene, window
-from ursina.prefabs.pause_menu import PauseMenu
+from game.ui.pause_menu import PauseMenu
 from game.player import Player
 from game.weapons.handgun import Handgun
 from game.weapons.shotgun import Shotgun
@@ -66,6 +66,9 @@ class GameManager(Entity):
         self.weapon_shop_ui.on_back = self.show_main_menu
 
         self.game_over_ui.on_return_to_menu = self.return_to_menu
+
+        self.pause_menu.on_resume = self.on_pause_resume
+        self.pause_menu.on_exit_to_menu = self.exit_to_main_menu
 
     def show_main_menu(self):
         self.cleanup_game()
@@ -209,6 +212,13 @@ class GameManager(Entity):
         self.game_over_ui.hide()
         self.show_main_menu()
 
+    def on_pause_resume(self):
+        pass
+
+    def exit_to_main_menu(self):
+        self.pause_menu.hide()
+        self.show_main_menu()
+
     def exit_game(self):
         application.quit()
 
@@ -235,8 +245,20 @@ class GameManager(Entity):
 
         self.available_abilities = []
 
+    def input(self, key):
+        if key == 'escape':
+            if self.state == GameState.PLAYING:
+                if not self.pause_menu.is_active:
+                    self.pause_menu.show()
+                else:
+                    self.pause_menu.hide()
+
     def update(self):
         if self.state == GameState.PLAYING:
+            # Skip game updates if pause menu is active
+            if self.pause_menu.is_active:
+                return
+                
             if self.player:
                 self.player.update()
 

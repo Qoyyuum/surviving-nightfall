@@ -79,6 +79,10 @@ class Player(FirstPersonController):
         if not self.is_alive:
             return
 
+        # Check if game is paused
+        if hasattr(self, 'game_manager') and self.game_manager.pause_menu.is_active:
+            return
+
         # Call parent FirstPersonController update for movement
         super().update()
 
