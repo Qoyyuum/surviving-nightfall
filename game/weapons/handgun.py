@@ -5,7 +5,7 @@ from game.config import GameConfig
 class Handgun(BaseWeapon):
     # Visual properties for first-person view
     # visual_model = "cube"
-    visual_model = "assets/models/equipment/Pistol_1_fixed.obj"
+    visual_model = "assets/models/equipment/Pistol_1.obj"
     # visual_color = color.gray
     visual_scale = (0.6, 0.6, 0.6)
     visual_position = (0.7, -0.25, 0.5)
