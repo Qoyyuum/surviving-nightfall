@@ -84,6 +84,7 @@ class WaveManager:
             enemy = Minotaur(spawn_pos, self.player)
 
         if enemy:
+            enemy.all_enemies = self.enemies
             self.enemies.append(enemy)
             print(
                 f"Spawned {enemy_type} at ({spawn_x:.1f}, {spawn_z:.1f}) - Total enemies: {len(self.enemies)}"

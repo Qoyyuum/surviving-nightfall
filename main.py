@@ -30,9 +30,8 @@ def main():
     # ground = Entity(model='plane', collider='box', scale=64, texture='white_cube', texture_scale=(64,64))
     # Dark blue night sky
     sky = Sky(color=color.rgb32(15, 20, 40))
-    sky.texture = "sky_sunset"  # Use built-in gradient texture for better appearance
-    sky.ground = ground
-
+    sky.texture = 'sky_sunset'  # Use built-in gradient texture for better appearance
+    
     # Add animated moon
     _moon = Moon()
 

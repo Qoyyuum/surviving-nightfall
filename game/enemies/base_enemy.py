@@ -1,5 +1,5 @@
-from ursina import Entity, time, destroy, distance
-
+from ursina import Entity, time, Vec3, destroy, distance
+import math
 
 class BaseEnemy(Entity):
     def __init__(
@@ -30,7 +30,8 @@ class BaseEnemy(Entity):
         self.is_alive = True
         self.attack_cooldown = 0
         self.attack_cooldown_time = 1.0
-
+        self.all_enemies = []
+        
     def take_damage(self, amount):
         if not self.is_alive:
             return False
@@ -55,16 +56,56 @@ class BaseEnemy(Entity):
 
     def on_death(self):
         pass
-
+        
+    def separate_from_enemies(self):
+        """Push away from nearby enemies to prevent overlap"""
+        separation_force = Vec3(0, 0, 0)
+        separation_radius = 2.5
+        
+        for other in self.all_enemies:
+            if other is self or not other.is_alive:
+                continue
+            
+            diff = self.position - other.position
+            diff.y = 0
+            dist = diff.length()
+            
+            if dist < separation_radius and dist > 0.01:
+                push_direction = diff.normalized()
+                push_strength = ((separation_radius - dist) / separation_radius) * 2.0
+                separation_force += push_direction * push_strength
+        
+        return separation_force
+    
     def move_toward_target(self, speed_multiplier=1.0):
         if not self.target or not self.target.is_alive:
             return
-
-        direction = (self.target.position - self.position).normalized()
-        self.position += direction * self.speed * speed_multiplier * time.dt
-
-        self.look_at(self.target.position)
-
+        
+        target_dir = self.target.position - self.position
+        target_dir.y = 0
+        
+        if target_dir.length() < 0.01:
+            return
+        
+        direction = target_dir.normalized()
+        separation = self.separate_from_enemies()
+        
+        combined = direction + separation
+        
+        if combined.length() < 0.01:
+            final_direction = direction
+        else:
+            final_direction = combined.normalized()
+        
+        movement = final_direction * self.speed * speed_multiplier * time.dt
+        movement.y = 0
+        
+        self.position += movement
+        self.y = 1
+        
+        angle = math.degrees(math.atan2(target_dir.x, target_dir.z))
+        self.rotation_y = angle
+        
     def check_collision_with_target(self):
         if not self.target or not self.target.is_alive or not self.is_alive:
             return
