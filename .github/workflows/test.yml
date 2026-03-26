@@ -30,10 +30,10 @@ jobs:
       run: |
         uv sync
         
-    - name: Run syntax check
+    - name: Lint and format check
       run: |
-        uv run python -m py_compile main.py
-        uv run python -m py_compile game/**/*.py
+        uvx ruff check .
+        uvx ruff format --check .
         
     - name: Test game imports
       run: |
