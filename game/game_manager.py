@@ -251,6 +251,7 @@ class GameManager(Entity):
 
             self.handle_collisions()
             self.handle_enemy_effects()
+            self.trigger_active_abilities()
 
             if self.player and not self.player.is_alive:
                 self.end_game(victory=False)
@@ -258,6 +259,10 @@ class GameManager(Entity):
         elif self.state == GameState.ABILITY_SELECT:
             if self.ability_select_ui:
                 self.ability_select_ui.update()
+        
+        elif self.state == GameState.WEAPON_SHOP:
+            if self.weapon_shop_ui:
+                self.weapon_shop_ui.update()
 
     def handle_collisions(self):
         if not self.player or not self.player.current_weapon or not self.wave_manager:
@@ -323,6 +328,22 @@ class GameManager(Entity):
                 ):
                     projectile.explode(enemies)
 
+    def trigger_active_abilities(self):
+        """Trigger abilities that need to be called each frame"""
+        if not self.player or not self.wave_manager:
+            return
+        
+        enemies = self.wave_manager.enemies
+        
+        # Trigger ArcLightning ability and handle kills
+        for ability in self.player.active_abilities:
+            if isinstance(ability, ArcLightning):
+                kills = ability.trigger(enemies)
+                # Spawn XP and score for Arc Lightning kills
+                for kill in kills:
+                    self.xp_system.spawn_xp_orb(kill["position"], kill["xp"])
+                    self.score_system.add_score(kill["score"])
+    
     def handle_enemy_effects(self):
         if not self.wave_manager:
             return

@@ -4,7 +4,12 @@ from game.config import GameConfig
 
 class IceBullets(BaseAbility):
     def __init__(self):
-        super().__init__(name="Ice Bullets", description="Bullets slow enemies on hit")
+        super().__init__(
+            name="Ice Bullets",
+            description="Bullets slow enemies on hit",
+            ui_model='diamond',
+            ui_color=(100, 100, 255)  # Blue
+        )
 
         self.slow_amount = GameConfig.ABILITY_ICE_BULLETS_SLOW
         self.slow_duration = GameConfig.ABILITY_ICE_BULLETS_DURATION
