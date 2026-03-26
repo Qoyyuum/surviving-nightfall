@@ -1,4 +1,4 @@
-from ursina import Entity, Vec3, held_keys, time, color, destroy, camera, PointLight
+from ursina import Entity, time, color, destroy, camera
 from ursina.prefabs.first_person_controller import FirstPersonController
 from game.config import GameConfig
 
@@ -45,9 +45,6 @@ class Player(FirstPersonController):
     def die(self):
         self.is_alive = False
         self.visible = False
-        if self.player_light:
-            destroy(self.player_light)
-            self.player_light = None
         
     def equip_weapon(self, weapon):
         if self.current_weapon:
