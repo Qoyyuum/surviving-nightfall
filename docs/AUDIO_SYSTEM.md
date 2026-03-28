@@ -115,7 +115,9 @@ The game automatically handles music transitions:
 
 To add audio to new game features:
 
-1. **Add the sound path** to `AudioManager.sfx_paths` or `AudioManager.music_paths`
+1. **Add the sound path** to `GameConfig.AUDIO_SFX_PATHS` or `GameConfig.AUDIO_MUSIC_PATHS` in `game/config.py`
+   - The `AudioManager` reads these values during initialization
+   - Always modify the GameConfig constants, not AudioManager attributes directly
 2. **Call the audio manager** at the appropriate event:
    ```python
    self.audio_manager.play_sfx('sound_name')
@@ -127,7 +129,7 @@ To add audio to new game features:
 
 All weapons automatically play their assigned sound effect when fired. To add audio to a new weapon:
 
-1. Add the sound file path to `AudioManager.sfx_paths`
+1. Add the sound file path to `GameConfig.AUDIO_SFX_PATHS` in `game/config.py`
 2. Set the `sound_effect` class attribute in the weapon class:
    ```python
    class NewWeapon(BaseWeapon):

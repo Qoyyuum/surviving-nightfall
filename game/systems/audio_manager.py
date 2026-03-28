@@ -49,16 +49,14 @@ class AudioManager:
             
             # Audio will auto-destroy after playing
         except Exception as e:
-            pass
+            print(f"Failed to play sfx '{sfx_name}' at path '{path}': {e}")
     
     def play_music(self, music_name, loop=True):
         """Play background music"""
         if music_name == self.current_music_name:
             return
         
-        # Stop current music if playing
-        self.stop_music()
-        
+        # Validate music exists before stopping current music
         if music_name not in self.music_paths:
             return
         
@@ -68,12 +66,15 @@ class AudioManager:
         if not os.path.exists(path):
             return
         
+        # Stop current music only after validation
+        self.stop_music()
+        
         try:
             volume = 0 if self.music_muted else self.music_volume
             self.current_music = Audio(path, loop=loop, autoplay=True, volume=volume)
             self.current_music_name = music_name
         except Exception as e:
-            pass
+            print(f"Failed to play music '{music_name}' at path '{path}': {e}")
     
     def stop_music(self):
         """Stop currently playing music"""

@@ -20,6 +20,7 @@ class BaseEnemy(Entity):
         score_value,
         size=1,
         color=None,
+        audio_manager=None,
         **kwargs,
     ):
         # Only pass color if it's not None (for textured models)
@@ -41,13 +42,13 @@ class BaseEnemy(Entity):
         self.attack_cooldown = 0
         self.attack_cooldown_time = 1.0
         self.all_enemies = []
-        self.audio_manager = None
+        self.audio_manager = audio_manager
         
         # Random growl timer (plays spawn sound randomly during lifetime)
         self.growl_timer = random.uniform(5.0, 15.0)
         self.next_growl_delay = random.uniform(10.0, 20.0)
         
-        # Play spawn sound on creation
+        # Play spawn sound on creation (now audio_manager is set)
         self._play_spawn_sound()
         
     def take_damage(self, amount):

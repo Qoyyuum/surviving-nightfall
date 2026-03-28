@@ -9,7 +9,7 @@ class GreenDemon(BaseEnemy):
     sound_hurt = 'green_demon_hurt'
     sound_death = 'green_demon_death'
     
-    def __init__(self, position, target):
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/GreenDemon.obj",
             position=position,
@@ -20,6 +20,7 @@ class GreenDemon(BaseEnemy):
             size=GameConfig.ENEMY_GREEN_DEMON_SIZE,
             xp_value=GameConfig.XP_PER_GREEN_DEMON,
             score_value=GameConfig.SCORE_PER_KILL_GREEN_DEMON,
+            audio_manager=audio_manager,
         )
 
     def ai_behavior(self):

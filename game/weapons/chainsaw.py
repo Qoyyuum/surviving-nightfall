@@ -30,9 +30,7 @@ class Chainsaw(BaseWeapon):
             self.fire_cooldown -= time.dt
 
         if mouse.left and self.owner and self.owner.is_alive:
-            if self.fire_cooldown <= 0:
-                self.fire()
-                self.fire_cooldown = self.fire_rate
+            self.try_fire()
 
         self.projectiles = [p for p in self.projectiles if p and p.enabled]
 

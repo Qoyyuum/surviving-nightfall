@@ -74,19 +74,18 @@ class WaveManager:
 
         enemy = None
         if enemy_type == "green_demon":
-            enemy = GreenDemon(spawn_pos, self.player)
+            enemy = GreenDemon(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "ghost":
-            enemy = Ghost(spawn_pos, self.player)
+            enemy = Ghost(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "cyclops":
-            enemy = Cyclops(spawn_pos, self.player)
+            enemy = Cyclops(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "bat":
-            enemy = Bat(spawn_pos, self.player)
+            enemy = Bat(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "cthulhu":
-            enemy = Cthulhu(spawn_pos, self.player)
+            enemy = Cthulhu(spawn_pos, self.player, self.audio_manager)
 
         if enemy:
             enemy.all_enemies = self.enemies
-            enemy.audio_manager = self.audio_manager
             self.enemies.append(enemy)
             print(
                 f"Spawned {enemy_type} at ({spawn_x:.1f}, {spawn_z:.1f}) - Total enemies: {len(self.enemies)}"

@@ -10,7 +10,7 @@ class Cyclops(BaseEnemy):
     sound_hurt = 'cyclops_hurt'
     sound_death = 'cyclops_death'
     
-    def __init__(self, position, target):
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/Cyclops.obj",
             position=position,
@@ -21,6 +21,7 @@ class Cyclops(BaseEnemy):
             size=GameConfig.ENEMY_CYCLOPS_SIZE,
             xp_value=GameConfig.XP_PER_CYCLOPS,
             score_value=GameConfig.SCORE_PER_KILL_CYCLOPS,
+            audio_manager=audio_manager,
         )
 
         self.burst_speed = GameConfig.ENEMY_CYCLOPS_SPEED_BURST

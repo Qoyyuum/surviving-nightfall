@@ -9,7 +9,7 @@ class Cthulhu(BaseEnemy):
     sound_hurt = 'cthulhu_hurt'
     sound_death = 'cthulhu_death'
     
-    def __init__(self, position, target):
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/Cthulhu.obj",
             position=position,
@@ -20,6 +20,7 @@ class Cthulhu(BaseEnemy):
             size=GameConfig.ENEMY_CTHULHU_SIZE,
             xp_value=GameConfig.XP_PER_CTHULHU,
             score_value=GameConfig.SCORE_PER_KILL_CTHULHU,
+            audio_manager=audio_manager,
         )
 
     def ai_behavior(self):

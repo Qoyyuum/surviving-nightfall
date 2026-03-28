@@ -50,7 +50,7 @@ class GameManager(Entity):
         self.ability_select_ui = AbilitySelectUI()
         self.weapon_shop_ui = WeaponShopUI(self.score_system, self.audio_manager)
         self.game_over_ui = GameOverUI()
-        self.pause_menu = PauseMenu()
+        self.pause_menu = PauseMenu(self.audio_manager)
         self.options_menu = OptionsMenu(self.audio_manager)
 
         self.pending_ability_selections = []
@@ -181,6 +181,9 @@ class GameManager(Entity):
 
     def on_level_up(self, level):
         self.pending_ability_selections.append(level)
+        
+        # Play level up sound
+        self.audio_manager.play_sfx('level_up')
 
     def show_ability_select(self):
         if len(self.pending_ability_selections) == 0:
