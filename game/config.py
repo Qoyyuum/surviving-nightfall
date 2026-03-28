@@ -200,3 +200,75 @@ class GameConfig:
     SCORE_PER_WAVE = 100
 
     COLLISION_CHECK_INTERVAL = 0.016
+
+    # Audio paths
+    AUDIO_SFX_PATHS = {
+        # Weapon sounds
+        'handgun_fire': 'assets/audio/sfx/shots/pistol.wav',
+        'shotgun_fire': 'assets/audio/sfx/shots/shotgun.wav',
+        'machine_gun_fire': 'assets/audio/sfx/shots/cg1.wav',
+        'katana_swing': 'assets/audio/sfx/katana_swing.wav',
+        'chainsaw_fire': 'assets/audio/sfx/chainsaw_fire.wav',
+        'bazooka_fire': 'assets/audio/sfx/bazooka_fire.wav',
+        'flamethrower_fire': 'assets/audio/sfx/flamethrower_fire.wav',
+        
+        # Monster sounds - Green Demon
+        'green_demon_spawn': 'assets/audio/sfx/green_demon_spawn.wav',
+        'green_demon_attack': 'assets/audio/sfx/green_demon_attack.wav',
+        'green_demon_hurt': 'assets/audio/sfx/green_demon_hurt.wav',
+        'green_demon_death': 'assets/audio/sfx/green_demon_death.wav',
+        
+        # Monster sounds - Ghost
+        'ghost_spawn': 'assets/audio/sfx/ghost_spawn.wav',
+        'ghost_attack': 'assets/audio/sfx/ghost_attack.wav',
+        'ghost_hurt': 'assets/audio/sfx/ghost_hurt.wav',
+        'ghost_death': 'assets/audio/sfx/ghost_death.wav',
+        
+        # Monster sounds - Cyclops
+        'cyclops_spawn': 'assets/audio/sfx/cyclops_spawn.wav',
+        'cyclops_attack': 'assets/audio/sfx/cyclops_attack.wav',
+        'cyclops_hurt': 'assets/audio/sfx/cyclops_hurt.wav',
+        'cyclops_death': 'assets/audio/sfx/cyclops_death.wav',
+        
+        # Monster sounds - Bat
+        'bat_spawn': 'assets/audio/sfx/bat_spawn.wav',
+        'bat_attack': 'assets/audio/sfx/bat_attack.wav',
+        'bat_hurt': 'assets/audio/sfx/bat_hurt.wav',
+        'bat_death': 'assets/audio/sfx/bat_death.wav',
+        
+        # Monster sounds - Cthulhu (Boss)
+        'cthulhu_spawn': 'assets/audio/sfx/cthulhu_spawn.wav',
+        'cthulhu_attack': 'assets/audio/sfx/cthulhu_attack.wav',
+        'cthulhu_hurt': 'assets/audio/sfx/cthulhu_hurt.wav',
+        'cthulhu_death': 'assets/audio/sfx/cthulhu_death.wav',
+        
+        # Combat sounds
+        'monster_hit': 'assets/audio/sfx/monster_hit.wav',
+        'monster_death': 'assets/audio/sfx/monster_death.wav',
+        'player_hit': 'assets/audio/sfx/player_hit.wav',
+        'player_death': 'assets/audio/sfx/player_death.wav',
+        
+        # Game events
+        'game_over': 'assets/audio/sfx/game_over.wav',
+        'game_start': 'assets/audio/sfx/game_start.wav',
+        'game_pause': 'assets/audio/sfx/game_pause.wav',
+        'game_resume': 'assets/audio/sfx/game_resume.wav',
+        
+        # UI sounds
+        'button_click': 'assets/audio/sfx/button_click.wav',
+        'weapon_purchase': 'assets/audio/sfx/weapon_purchase.wav',
+        
+        # Ability sounds
+        'arc_lightning': 'assets/audio/sfx/arc_lightning.wav',
+        'healing_orb_collect': 'assets/audio/sfx/healing_orb_collect.wav',
+        'xp_orb_collect': 'assets/audio/sfx/xp_orb_collect.wav',
+        
+        # Wave events
+        'wave_complete': 'assets/audio/sfx/wave_complete.wav',
+    }
+    
+    AUDIO_MUSIC_PATHS = {
+        'menu': 'assets/audio/music/Goblins_Den_(Regular).wav',
+        'battle': 'assets/audio/music/Goblins_Dance_(Battle).wav',
+        'boss': 'assets/audio/music/Goblins_Dance_(Battle).wav',
+    }

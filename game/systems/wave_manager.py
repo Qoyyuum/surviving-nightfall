@@ -10,8 +10,9 @@ from game.enemies.cthulhu import Cthulhu
 
 
 class WaveManager:
-    def __init__(self, player):
+    def __init__(self, player, audio_manager=None):
         self.player = player
+        self.audio_manager = audio_manager
         self.current_wave = 0
         self.max_waves = 5
         self.enemies = []
@@ -85,6 +86,7 @@ class WaveManager:
 
         if enemy:
             enemy.all_enemies = self.enemies
+            enemy.audio_manager = self.audio_manager
             self.enemies.append(enemy)
             print(
                 f"Spawned {enemy_type} at ({spawn_x:.1f}, {spawn_z:.1f}) - Total enemies: {len(self.enemies)}"

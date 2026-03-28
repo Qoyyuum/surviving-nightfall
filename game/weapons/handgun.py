@@ -9,6 +9,9 @@ class Handgun(BaseWeapon):
     visual_scale = (0.4, 0.4, 0.4)
     visual_position = (0, -0.45, 0)
     visual_rotation = (0, 90, 0)
+    
+    # Audio
+    sound_effect = 'handgun_fire'
 
     def __init__(self, owner=None):
         super().__init__(

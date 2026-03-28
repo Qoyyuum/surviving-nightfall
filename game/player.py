@@ -16,6 +16,7 @@ class Player(FirstPersonController):
         self.current_weapon = None
         self.weapon_model = None  # Visual representation of weapon
         self.active_abilities = []
+        self.game_manager = None  # Reference to game manager for audio
 
         self.damage_cooldown = 0
         self.damage_cooldown_time = 0.5
@@ -29,6 +30,10 @@ class Player(FirstPersonController):
 
         self.health -= amount
         self.damage_cooldown = self.damage_cooldown_time
+        
+        # Play player hit sound
+        if self.game_manager and hasattr(self.game_manager, 'audio_manager'):
+            self.game_manager.audio_manager.play_sfx('player_hit')
 
         if self.health <= 0:
             self.health = 0
@@ -43,6 +48,10 @@ class Player(FirstPersonController):
     def die(self):
         self.is_alive = False
         self.visible = False
+        
+        # Play player death sound
+        if self.game_manager and hasattr(self.game_manager, 'audio_manager'):
+            self.game_manager.audio_manager.play_sfx('player_death')
 
     def equip_weapon(self, weapon):
         if self.current_weapon:

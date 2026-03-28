@@ -5,6 +5,12 @@ import random
 
 
 class Bat(BaseEnemy):
+    # Audio
+    sound_spawn = 'bat_spawn'
+    sound_attack = 'bat_attack'
+    sound_hurt = 'bat_hurt'
+    sound_death = 'bat_death'
+    
     def __init__(self, position, target):
         super().__init__(
             model="assets/models/monsters/Bat.obj",

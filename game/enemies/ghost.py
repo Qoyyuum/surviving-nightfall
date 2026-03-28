@@ -4,6 +4,12 @@ import random
 
 
 class Ghost(BaseEnemy):
+    # Audio
+    sound_spawn = 'ghost_spawn'
+    sound_attack = 'ghost_attack'
+    sound_hurt = 'ghost_hurt'
+    sound_death = 'ghost_death'
+    
     def __init__(self, position, target):
         super().__init__(
             model="assets/models/monsters/Ghost.obj",

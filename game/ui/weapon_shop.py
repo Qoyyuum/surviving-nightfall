@@ -5,8 +5,9 @@ import random
 
 
 class WeaponShopUI:
-    def __init__(self, score_system):
+    def __init__(self, score_system, audio_manager=None):
         self.score_system = score_system
+        self.audio_manager = audio_manager
         self.ui_elements = []
         self.is_active = False
         self.weapon_models = []
@@ -326,10 +327,19 @@ class WeaponShopUI:
 
     def _on_weapon_clicked(self, weapon_name):
         if self.score_system.unlock_weapon(weapon_name):
+            # Play purchase sound
+            if self.audio_manager:
+                self.audio_manager.play_sfx('weapon_purchase')
             self.hide()
             self.show()
+        else:
+            # Play button click for failed purchase
+            if self.audio_manager:
+                self.audio_manager.play_sfx('button_click')
 
     def _on_back_clicked(self):
+        if self.audio_manager:
+            self.audio_manager.play_sfx('button_click')
         if self.on_back:
             self.hide()
             self.on_back()

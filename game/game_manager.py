@@ -12,6 +12,7 @@ from game.systems.wave_manager import WaveManager
 from game.systems.xp_system import XPSystem
 from game.systems.score_system import ScoreSystem
 from game.systems.collision import CollisionSystem
+from game.systems.audio_manager import AudioManager
 from game.abilities.arc_lightning import ArcLightning
 from game.abilities.ice_bullets import IceBullets
 from game.abilities.healing import Healing
@@ -20,6 +21,7 @@ from game.ui.hud import HUD
 from game.ui.ability_select import AbilitySelectUI
 from game.ui.weapon_shop import WeaponShopUI
 from game.ui.game_over import GameOverUI
+from game.ui.options_menu import OptionsMenu
 
 
 class GameState:
@@ -28,6 +30,7 @@ class GameState:
     ABILITY_SELECT = "ability_select"
     WEAPON_SHOP = "weapon_shop"
     GAME_OVER = "game_over"
+    OPTIONS = "options"
 
 
 class GameManager(Entity):
@@ -40,13 +43,15 @@ class GameManager(Entity):
         self.xp_system = None
         self.score_system = ScoreSystem()
         self.collision_system = CollisionSystem()
+        self.audio_manager = AudioManager()
 
         self.main_menu = MainMenu(self.score_system)
         self.hud = None
         self.ability_select_ui = AbilitySelectUI()
-        self.weapon_shop_ui = WeaponShopUI(self.score_system)
+        self.weapon_shop_ui = WeaponShopUI(self.score_system, self.audio_manager)
         self.game_over_ui = GameOverUI()
         self.pause_menu = PauseMenu()
+        self.options_menu = OptionsMenu(self.audio_manager)
 
         self.pending_ability_selections = []
         self.available_abilities = []
@@ -58,6 +63,7 @@ class GameManager(Entity):
     def _setup_callbacks(self):
         self.main_menu.on_start_game = self.start_game
         self.main_menu.on_weapon_shop = self.show_weapon_shop
+        self.main_menu.on_options = self.show_options
         self.main_menu.on_exit_game = self.exit_game
 
         self.ability_select_ui.on_ability_selected = self.on_ability_selected
@@ -70,16 +76,28 @@ class GameManager(Entity):
         self.pause_menu.on_resume = self.on_pause_resume
         self.pause_menu.on_exit_to_menu = self.exit_to_main_menu
 
+        self.options_menu.on_back = self.return_from_options
+
     def show_main_menu(self):
         self.cleanup_game()
         self.state = GameState.MENU
         self.main_menu.show()
         mouse.locked = False
+        
+        # Play menu music
+        self.audio_manager.play_music('menu')
 
     def show_weapon_shop(self):
+        self.audio_manager.play_sfx('button_click')
         self.main_menu.hide()
         self.state = GameState.WEAPON_SHOP
         self.weapon_shop_ui.show()
+    
+    def show_options(self):
+        self.audio_manager.play_sfx('button_click')
+        self.main_menu.hide()
+        self.state = GameState.OPTIONS
+        self.options_menu.show()
 
     def set_fog(self):
         scene.fog_color = color.black
@@ -87,11 +105,16 @@ class GameManager(Entity):
         window.color = scene.fog_color
 
     def start_game(self):
+        self.audio_manager.play_sfx('button_click')
+        self.audio_manager.play_sfx('game_start')
         self.main_menu.hide()
         self.weapon_shop_ui.hide()
 
         self.state = GameState.PLAYING
         mouse.locked = True
+        
+        # Play battle music
+        self.audio_manager.play_music('battle')
 
         # self.set_fog()
 
@@ -108,7 +131,7 @@ class GameManager(Entity):
 
         # FirstPersonController handles camera automatically via camera_pivot
 
-        self.wave_manager = WaveManager(self.player)
+        self.wave_manager = WaveManager(self.player, self.audio_manager)
         self.wave_manager.on_wave_complete = self.on_wave_complete
         self.wave_manager.on_all_waves_complete = self.on_all_waves_complete
 
@@ -137,9 +160,13 @@ class GameManager(Entity):
         }
 
         weapon_class = weapon_map.get(weapon_name, Handgun)
-        return weapon_class(owner=self.player)
+        weapon = weapon_class(owner=self.player)
+        weapon.audio_manager = self.audio_manager
+        return weapon
 
     def on_wave_complete(self, wave_number):
+        self.audio_manager.play_sfx('wave_complete')
+        
         # Store the next wave to start after ability selection
         self.next_wave_to_start = wave_number + 1
 
@@ -184,6 +211,7 @@ class GameManager(Entity):
             self.resume_game()
 
     def resume_game(self):
+        self.audio_manager.play_sfx('game_resume')
         self.state = GameState.PLAYING
         mouse.locked = True
 
@@ -194,10 +222,16 @@ class GameManager(Entity):
             and self.next_wave_to_start <= 5
         ):
             self.score_system.add_score(100)
+            
+            # Play boss music for final wave
+            if self.next_wave_to_start == 5:
+                self.audio_manager.play_music('boss')
+            
             self.wave_manager.start_wave(self.next_wave_to_start)
             self.next_wave_to_start = None  # Clear it
 
     def end_game(self, victory=False):
+        self.audio_manager.play_sfx('game_over')
         self.state = GameState.GAME_OVER
         mouse.locked = False
 
@@ -207,13 +241,21 @@ class GameManager(Entity):
 
         self.hud.hide()
         self.game_over_ui.show(victory, session_score, total_score)
+        
+        # Stop battle/boss music
+        self.audio_manager.stop_music()
 
     def return_to_menu(self):
         self.game_over_ui.hide()
         self.show_main_menu()
+    
+    def return_from_options(self):
+        self.options_menu.hide()
+        self.state = GameState.MENU
+        self.main_menu.show()
 
     def on_pause_resume(self):
-        pass
+        self.audio_manager.play_sfx('game_resume')
 
     def exit_to_main_menu(self):
         self.pause_menu.hide()
@@ -298,6 +340,12 @@ class GameManager(Entity):
         )
 
         for hit in hits:
+            # Play monster hit or death sound
+            if hit.get("killed", False):
+                self.audio_manager.play_sfx('monster_death')
+            else:
+                self.audio_manager.play_sfx('monster_hit')
+            
             self.xp_system.spawn_xp_orb(hit["position"], hit["xp"])
             self.score_system.add_score(hit["score"])
 
@@ -325,6 +373,7 @@ class GameManager(Entity):
         )
 
         for orb in collected_xp:
+            self.audio_manager.play_sfx('xp_orb_collect')
             self.xp_system.collect_orb(orb)
 
         healing_ability = None
@@ -340,6 +389,7 @@ class GameManager(Entity):
             )
 
             for orb in collected_food:
+                self.audio_manager.play_sfx('healing_orb_collect')
                 healing_ability.collect_food(orb)
 
         if hasattr(self.player.current_weapon, "projectiles"):
@@ -363,6 +413,8 @@ class GameManager(Entity):
                 kills = ability.trigger(enemies)
                 # Spawn XP and score for Arc Lightning kills
                 for kill in kills:
+                    self.audio_manager.play_sfx('arc_lightning')
+                    self.audio_manager.play_sfx('monster_death')
                     self.xp_system.spawn_xp_orb(kill["position"], kill["xp"])
                     self.score_system.add_score(kill["score"])
     

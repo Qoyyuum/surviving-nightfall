@@ -4,6 +4,12 @@ from ursina import time
 
 
 class Cyclops(BaseEnemy):
+    # Audio
+    sound_spawn = 'cyclops_spawn'
+    sound_attack = 'cyclops_attack'
+    sound_hurt = 'cyclops_hurt'
+    sound_death = 'cyclops_death'
+    
     def __init__(self, position, target):
         super().__init__(
             model="assets/models/monsters/Cyclops.obj",

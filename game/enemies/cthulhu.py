@@ -3,6 +3,12 @@ from game.config import GameConfig
 
 
 class Cthulhu(BaseEnemy):
+    # Audio
+    sound_spawn = 'cthulhu_spawn'
+    sound_attack = 'cthulhu_attack'
+    sound_hurt = 'cthulhu_hurt'
+    sound_death = 'cthulhu_death'
+    
     def __init__(self, position, target):
         super().__init__(
             model="assets/models/monsters/Cthulhu.obj",

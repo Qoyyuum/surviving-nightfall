@@ -3,6 +3,12 @@ from game.config import GameConfig
 
 
 class GreenDemon(BaseEnemy):
+    # Audio
+    sound_spawn = 'green_demon_spawn'
+    sound_attack = 'green_demon_attack'
+    sound_hurt = 'green_demon_hurt'
+    sound_death = 'green_demon_death'
+    
     def __init__(self, position, target):
         super().__init__(
             model="assets/models/monsters/GreenDemon.obj",
