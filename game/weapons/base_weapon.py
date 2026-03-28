@@ -41,6 +41,9 @@ class Projectile(Entity):
 
 
 class BaseWeapon:
+    # Class attribute for weapon sound effect name (override in subclasses)
+    sound_effect = None
+    
     def __init__(self, name, damage, fire_rate, owner=None):
         self.name = name
         self.damage = damage
@@ -48,6 +51,7 @@ class BaseWeapon:
         self.owner = owner
         self.fire_cooldown = 0
         self.projectiles = []
+        self.audio_manager = None
 
     def can_fire(self):
         return self.fire_cooldown <= 0
@@ -56,6 +60,10 @@ class BaseWeapon:
         if self.can_fire() and self.owner and self.owner.is_alive:
             self.fire()
             self.fire_cooldown = self.fire_rate
+            
+            # Play weapon sound effect
+            if self.sound_effect and self.audio_manager:
+                self.audio_manager.play_sfx(self.sound_effect)
 
     def fire(self):
         pass

@@ -10,6 +10,9 @@ class Chainsaw(BaseWeapon):
     visual_scale = (0.2, 0.2, 0.4)
     visual_position = (0.4, -0.3, 0.5)
     visual_rotation = (-10, 0, 0)
+    
+    # Audio
+    sound_effect = 'chainsaw_fire'
 
     def __init__(self, owner=None):
         super().__init__(
@@ -27,9 +30,7 @@ class Chainsaw(BaseWeapon):
             self.fire_cooldown -= time.dt
 
         if mouse.left and self.owner and self.owner.is_alive:
-            if self.fire_cooldown <= 0:
-                self.fire()
-                self.fire_cooldown = self.fire_rate
+            self.try_fire()
 
         self.projectiles = [p for p in self.projectiles if p and p.enabled]
 

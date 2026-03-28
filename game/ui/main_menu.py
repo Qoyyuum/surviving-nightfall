@@ -10,6 +10,7 @@ class MainMenu:
 
         self.on_start_game = None
         self.on_weapon_shop = None
+        self.on_options = None
         self.on_exit_game = None
 
     def show(self):
@@ -65,11 +66,20 @@ class MainMenu:
         )
         self.ui_elements.append(shop_button)
 
+        options_button = Button(
+            text="Options",
+            color=color.rgb32(70, 130, 180),
+            scale=(0.3, 0.08),
+            position=(0, -0.3),
+            on_click=self._on_options_clicked,
+        )
+        self.ui_elements.append(options_button)
+
         exit_button = Button(
             text="Exit Game",
             color=color.rgb32(138, 3, 3),
             scale=(0.3, 0.08),
-            position=(0, -0.3),
+            position=(0, -0.4),
             on_click=self._on_exit_clicked,
         )
         self.ui_elements.append(exit_button)
@@ -88,6 +98,10 @@ class MainMenu:
     def _on_shop_clicked(self):
         if self.on_weapon_shop:
             self.on_weapon_shop()
+
+    def _on_options_clicked(self):
+        if self.on_options:
+            self.on_options()
 
     def _on_exit_clicked(self):
         if self.on_exit_game:

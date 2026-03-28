@@ -55,7 +55,10 @@ This project is provided as-is for educational and entertainment purposes.
 
 ## Credits
 
-3D models are supplied by Quaternius (https://quaternius.com/)
+3D models are supplied by [Quaternius](https://quaternius.com/)
+Music from [LeoPaZ](https://leohpaz.itch.io/minifantasy-dungeon-sfx-pack)
+Sound effects from [OpenGameArt](https://opengameart.org/)
+Monster noises, voiced by [me](https://buymeacoffee.com/qoyyuum)
 
 ---
 

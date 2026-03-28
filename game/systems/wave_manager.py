@@ -10,8 +10,9 @@ from game.enemies.cthulhu import Cthulhu
 
 
 class WaveManager:
-    def __init__(self, player):
+    def __init__(self, player, audio_manager=None):
         self.player = player
+        self.audio_manager = audio_manager
         self.current_wave = 0
         self.max_waves = 5
         self.enemies = []
@@ -73,15 +74,15 @@ class WaveManager:
 
         enemy = None
         if enemy_type == "green_demon":
-            enemy = GreenDemon(spawn_pos, self.player)
+            enemy = GreenDemon(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "ghost":
-            enemy = Ghost(spawn_pos, self.player)
+            enemy = Ghost(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "cyclops":
-            enemy = Cyclops(spawn_pos, self.player)
+            enemy = Cyclops(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "bat":
-            enemy = Bat(spawn_pos, self.player)
+            enemy = Bat(spawn_pos, self.player, self.audio_manager)
         elif enemy_type == "cthulhu":
-            enemy = Cthulhu(spawn_pos, self.player)
+            enemy = Cthulhu(spawn_pos, self.player, self.audio_manager)
 
         if enemy:
             enemy.all_enemies = self.enemies

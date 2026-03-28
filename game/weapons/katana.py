@@ -10,6 +10,9 @@ class Katana(BaseWeapon):
     visual_scale = (0.05, 0.05, 0.8)
     visual_position = (0.4, -0.3, 0.5)
     visual_rotation = (-10, 0, 0)
+    
+    # Audio
+    sound_effect = 'katana_swing'
 
     def __init__(self, owner=None):
         super().__init__(

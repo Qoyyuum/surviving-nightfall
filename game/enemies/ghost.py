@@ -4,7 +4,13 @@ import random
 
 
 class Ghost(BaseEnemy):
-    def __init__(self, position, target):
+    # Audio
+    sound_spawn = 'ghost_spawn'
+    sound_attack = 'ghost_attack'
+    sound_hurt = 'ghost_hurt'
+    sound_death = 'ghost_death'
+    
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/Ghost.obj",
             position=position,
@@ -16,6 +22,7 @@ class Ghost(BaseEnemy):
             color=GameConfig.ENEMY_GHOST_COLOR,
             xp_value=GameConfig.XP_PER_GHOST,
             score_value=GameConfig.SCORE_PER_KILL_GHOST,
+            audio_manager=audio_manager,
         )
 
         self.dodge_chance = GameConfig.ENEMY_GHOST_DODGE_CHANCE

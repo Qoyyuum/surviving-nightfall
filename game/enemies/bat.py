@@ -5,7 +5,13 @@ import random
 
 
 class Bat(BaseEnemy):
-    def __init__(self, position, target):
+    # Audio
+    sound_spawn = 'bat_spawn'
+    sound_attack = 'bat_attack'
+    sound_hurt = 'bat_hurt'
+    sound_death = 'bat_death'
+    
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/Bat.obj",
             position=position,
@@ -16,6 +22,7 @@ class Bat(BaseEnemy):
             size=GameConfig.ENEMY_BAT_SIZE,
             xp_value=GameConfig.XP_PER_BAT,
             score_value=GameConfig.SCORE_PER_KILL_BAT,
+            audio_manager=audio_manager,
         )
 
         self.jump_cooldown_time = GameConfig.ENEMY_BAT_JUMP_COOLDOWN

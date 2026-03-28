@@ -3,7 +3,13 @@ from game.config import GameConfig
 
 
 class Cthulhu(BaseEnemy):
-    def __init__(self, position, target):
+    # Audio
+    sound_spawn = 'cthulhu_spawn'
+    sound_attack = 'cthulhu_attack'
+    sound_hurt = 'cthulhu_hurt'
+    sound_death = 'cthulhu_death'
+    
+    def __init__(self, position, target, audio_manager=None):
         super().__init__(
             model="assets/models/monsters/Cthulhu.obj",
             position=position,
@@ -14,6 +20,7 @@ class Cthulhu(BaseEnemy):
             size=GameConfig.ENEMY_CTHULHU_SIZE,
             xp_value=GameConfig.XP_PER_CTHULHU,
             score_value=GameConfig.SCORE_PER_KILL_CTHULHU,
+            audio_manager=audio_manager,
         )
 
     def ai_behavior(self):
