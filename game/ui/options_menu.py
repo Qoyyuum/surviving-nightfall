@@ -16,6 +16,8 @@ class OptionsMenu:
         # UI references
         self.sfx_slider = None
         self.music_slider = None
+        self.sfx_volume_text = None
+        self.music_volume_text = None
         self.sfx_mute_button = None
         self.music_mute_button = None
     
