@@ -9,7 +9,7 @@ A 3D third-person bullet hell survival game built with Python and Ursina Game En
 uv sync
 
 # Run the game
-uv run python main.py
+uv run run_game.py
 ```
 
 ## Documentation
@@ -59,6 +59,7 @@ This project is provided as-is for educational and entertainment purposes.
 Music from [LeoPaZ](https://leohpaz.itch.io/minifantasy-dungeon-sfx-pack)
 Sound effects from [OpenGameArt](https://opengameart.org/)
 Monster noises, voiced by [me](https://buymeacoffee.com/qoyyuum)
+Thank you [PyWeek](https://pyweek.org/41) for this game jam opportunity
 
 ---
 
